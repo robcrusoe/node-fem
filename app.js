@@ -5,6 +5,7 @@ const path = require('path');
 const express = require('express');
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
+const expressHbs = require('express-handlebars');
 
 /* Registering our app */
 const app = express();
@@ -19,7 +20,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 /* Registering the view engine */
-app.set('view engine', 'pug');
+app.engine('hbs', expressHbs({ defaultLayout: 'main-layout', layoutsDir: 'views/layouts', extname: 'hbs' }));
+app.set('view engine', 'hbs');
 
 /* Registering the views directory */
 app.set('views', 'views');
@@ -32,7 +34,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.get('/users', (req, res, next) => {
-    res.render('users', { pageTitle: 'Users', users: users });
+    res.render('users', { pageTitle: 'Users', users: users, hasUsers: users.length > 0 });
 });
 
 app.post('/add-user', (req, res, next) => {
