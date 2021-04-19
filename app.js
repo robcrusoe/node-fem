@@ -5,7 +5,6 @@ const path = require('path');
 const express = require('express');
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
-const expressHbs = require('express-handlebars');
 
 /* Registering our app */
 const app = express();
@@ -20,8 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 /* Registering the view engine */
-app.engine('hbs', expressHbs({ defaultLayout: 'main-layout', layoutsDir: 'views/layouts', extname: 'hbs' }));
-app.set('view engine', 'hbs');
+app.set('view engine', 'ejs');
 
 /* Registering the views directory */
 app.set('views', 'views');
